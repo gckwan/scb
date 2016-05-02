@@ -7,8 +7,10 @@
 import React, {
   AppRegistry,
   Component,
+  NavigatorIOS,
   Text,
   View,
+  StyleSheet,
 } from 'react-native';
 
 import CategoryPage from './js/CategoryPage';
@@ -16,9 +18,21 @@ import CategoryPage from './js/CategoryPage';
 class scb extends Component {
   render() {
     return (
-      <CategoryPage />
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'Vocabook - 生词本',
+          component: CategoryPage,
+        }}
+      />
     );
   }
 }
+
+const styles = React.StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 
 AppRegistry.registerComponent('scb', () => scb);
