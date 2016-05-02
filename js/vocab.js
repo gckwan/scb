@@ -1,5 +1,5 @@
 export default {
-  food: [
+  Food: [
     {english: 'Rice', chinese: '饭'},
     {english: 'Noodles', chinese: '面'},
     {english: 'Tea', chinese: '茶'},
@@ -9,10 +9,10 @@ export default {
     {english: 'Meat', chinese: '肉'},
     {english: 'Egg', chinese: '蛋'},
   ],
-  basics: [
+  Basics: [
 
   ],
-  'dim sum': [
+  'Dim sum': [
     {english: 'BBQ pork bun', chinese: '叉烧包'}
   ]
 };
