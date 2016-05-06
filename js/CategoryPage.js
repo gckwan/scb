@@ -17,14 +17,14 @@ import NavigatorShape from './NavigatorShape';
 
 export default class CategoryPage extends Component {
   static propTypes = {
-    navigator: NavigatorShape
+    navigator: NavigatorShape.isRequired
   };
 
   render() {
     const categories: Array<string> = Object.keys(vocab);
     const ds: ListView.DataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const dataSource: ListView.DataSource = ds.cloneWithRows(categories);
-    console.log(this.props.navigator);
+
     return (
       <View style={styles.page}>
         <ListView

@@ -11,10 +11,7 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import Translation from './Translation';
-import CountdownTimer from './CountdownTimer';
-
-export default class WordView extends Component {
+export default class Translation extends Component {
   static propTypes = {
     word: React.PropTypes.shape({
       english: React.PropTypes.string.isRequired,
@@ -27,8 +24,9 @@ export default class WordView extends Component {
 
     return (
       <View style={styles.container}>
-        <CountdownTimer initialTimeRemaining={5000} interval={1000} isRepeating={true} />
-        <Translation word={word} />
+        <Text style={styles.pinyin}>{word.pinyin}</Text>
+        <Text style={styles.character}>{word.chinese}</Text>
+        <Text style={styles.translation}>{word.english}</Text>
       </View>
     );
   }
@@ -41,4 +39,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  character: {
+    fontSize: 180,
+    marginBottom: 48,
+    color: '#FFF'
+  },
+  pinyin: {
+    fontSize: 18,
+    marginBottom: 24,
+    color: '#FFF',
+    opacity: .75,
+  },
+  translation: {
+    fontSize: 36,
+    color: '#FFF'
+  }
 });

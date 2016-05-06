@@ -8,49 +8,54 @@ import React, {
   View,
   StyleSheet,
   Text,
-  TouchableHighlight
+  TouchableOpacity
 } from 'react-native';
 
 import VocabView from './VocabView';
+import Instructions from './Instructions';
 import NavigatorShape from './NavigatorShape';
 
 export default class Category extends Component {
   static propTypes = {
-    categoryName: React.PropTypes.string,
-    navigator: NavigatorShape
+    categoryName: React.PropTypes.string.isRequired,
+    navigator: NavigatorShape.isRequired
   };
 
   onPress = () => {
     const {categoryName, navigator} = this.props;
 
-    this.props.navigator.push({
+    navigator.push({
       title: categoryName,
-      component: VocabView,
+      component: Instructions,
       passProps: {categoryName}
     });
   }
 
   render() {
     return (
-      <TouchableHighlight onPress={this.onPress}>
+      <TouchableOpacity onPress={this.onPress}>
         <View style={styles.category}>
           <Text style={styles.categoryName}>{this.props.categoryName}</Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     )
   }
 }
 
 const styles = StyleSheet.create({
   category: {
-    backgroundColor: 'white',
+    marginTop: 18,
+    borderColor: 'white',
+    borderWidth: 1,
     margin: 12,
     width: 90,
     height: 90,
     justifyContent: 'center',
-    borderRadius: 12
+    borderRadius: 45
   },
   categoryName: {
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'white',
+    backgroundColor: 'transparent'
   }
 });

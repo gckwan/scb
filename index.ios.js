@@ -21,7 +21,7 @@ class scb extends Component {
       <NavigatorIOS
         style={styles.container}
         initialRoute={{
-          title: 'Vocabook - 生词本',
+          title: 'scb (生词本)',
           component: CategoryPage,
         }}
       />

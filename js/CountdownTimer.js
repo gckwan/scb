@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: 'absolute',
-    top: 90,
+    top: 84,
     right: 18,
     justifyContent: 'center',
   },

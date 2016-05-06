@@ -15,14 +15,14 @@ import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 import vocab from './vocab';
 import WordView from './WordView';
+import MatchingInstructions from './MatchingInstructions';
 import NavigatorShape from './NavigatorShape';
-import CountdownTimer from './CountdownTimer';
 
 const WORD_DURATION_MS = 5000;
 
 export default class VocabView extends Component {
-  static propTypes = {
-    categoryName: React.PropTypes.string,
+  props : {
+    categoryName: string,
     navigator: NavigatorShape
   };
 
@@ -38,8 +38,9 @@ export default class VocabView extends Component {
     const vocabList = vocab[this.props.categoryName];
 
     let {wordIndex} = this.state;
+    const outOfWords = ++wordIndex >= vocabList.length;
 
-    if (++wordIndex >= vocabList.length) {
+    if (outOfWords) {
       this.clearInterval(this.wordChangeIntervalId);
       this.transitionToGame();
     } else {
@@ -48,6 +49,13 @@ export default class VocabView extends Component {
   }
 
   transitionToGame(): void {
+    const {categoryName, navigator} = this.props;
+
+    navigator.push({
+      title: categoryName,
+      component: MatchingInstructions,
+      passProps: {categoryName}
+    });
   }
 
   render() {
@@ -55,7 +63,6 @@ export default class VocabView extends Component {
     const word = vocabList[this.state.wordIndex];
     return (
       <View style={styles.container}>
-        <CountdownTimer initialTimeRemaining={5000} interval={1000} isRepeating={true} />
         <WordView word={word} />
       </View>
     );
