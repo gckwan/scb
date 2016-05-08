@@ -9,7 +9,7 @@ import React, {
   Text,
 } from 'react-native';
 
-import vocab from './vocab';
+import vocab from './common/vocab';
 import Button from './common/Button';
 import NavigatorShape from './NavigatorShape';
 import VocabView from './VocabView';

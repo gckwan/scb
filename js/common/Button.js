@@ -14,11 +14,10 @@
 
 export default class F8Button extends React.Component {
   props: {
-    caption: string;
     type: 'primary' | 'secondary';
-    style: any;
-    onPress: () => void;
-    children: node;
+    style?: any;
+    onPress?: () => void;
+    children?: any;
   };
 
   static defaultProps = {

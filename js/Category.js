@@ -21,7 +21,7 @@ export default class Category extends Component {
     navigator: NavigatorShape.isRequired
   };
 
-  onPress = () => {
+  onPress = (): void => {
     const {categoryName, navigator} = this.props;
 
     navigator.push({
@@ -29,7 +29,7 @@ export default class Category extends Component {
       component: Instructions,
       passProps: {categoryName}
     });
-  }
+  };
 
   render() {
     return (

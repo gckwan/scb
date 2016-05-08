@@ -11,7 +11,7 @@ import React, {
   Text
 } from 'react-native';
 
-import vocab from './vocab';
+import vocab from './common/vocab';
 import Category from './Category';
 import NavigatorShape from './NavigatorShape';
 
@@ -40,11 +40,11 @@ export default class CategoryPage extends Component {
 const styles = StyleSheet.create({
   page: {
     backgroundColor: '#3A69A6',
-    flex: 1
+    flex: 1,
   },
   list: {
     justifyContent: 'center',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   }
 });

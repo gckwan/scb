@@ -13,7 +13,7 @@ import React, {
 
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
-import vocab from './vocab';
+import vocab from './common/vocab';
 import WordView from './WordView';
 import MatchingInstructions from './MatchingInstructions';
 import NavigatorShape from './NavigatorShape';

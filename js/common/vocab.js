@@ -9,10 +9,13 @@ export default {
     {english: 'Meat', chinese: '肉', pinyin: 'ròu'},
     {english: 'Egg', chinese: '蛋', pinyin: 'dàn'},
   ],
-  Basics: [
-
+  Directions: [
+    {english: 'North', chinese: '北'}
   ],
   'Dim sum': [
     {english: 'BBQ pork bun', chinese: '叉烧包'}
+  ],
+  'Cities': [
+    {english: 'Beijing', chinese: '北京'}
   ]
 };
