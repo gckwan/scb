@@ -15,18 +15,26 @@ import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 
 export default class CountdownTimer extends Component {
-  static propTypes = {
-    initialTimeRemaining: React.PropTypes.number,
-    interval: React.PropTypes.number,
-    isRepeating: React.PropTypes.bool,
-    style: React.PropTypes.object
+  props: {
+    initialTimeRemaining: number,
+    interval: number,
+    isRepeating: bool,
+    style: Object,
+    onTick: () => void,
+    onZero: () => void,
   };
 
-  static defaultProps = {
-    style: {}
+  static defaultProps: {
+    style: {},
+    onTick: () => void,
+    onZero: () => void
   };
 
-  constructor(props) {
+  state: {
+    timeRemaining: number
+  };
+
+  constructor(props: Object) {
     super(props);
     this.state = {
       timeRemaining: props.initialTimeRemaining
@@ -38,18 +46,23 @@ export default class CountdownTimer extends Component {
   }
 
   countDown() {
-    let newTimeRemaining = this.state.timeRemaining - this.props.interval;
-    console.log('interval has passed');
-    console.log(newTimeRemaining);
+    const {timeRemaining} = this.state;
+    const {interval, isRepating, initialTimeRemaining} = this.props;
+    let newTimeRemaining = this.state.timeRemaining - interval;
 
     // If isRepeating is true, reset the time remaining to initialTimeRemaining when it hits 0
     if (newTimeRemaining === 0) {
-      if (this.props.isRepeating) {
-        newTimeRemaining = this.props.initialTimeRemaining;
+      if (isRepeating) {
+        newTimeRemaining = initialTimeRemaining;
       } else {
         this.clearInterval(this.intervalId);
       }
     }
+
+    this.props.onTick({
+      timeElapsed: initialTimeRemaining - timeRemaining,
+      timeRemaining
+    });
 
     this.setState({timeRemaining: newTimeRemaining});
   }

@@ -21,9 +21,13 @@ import NavigatorShape from './NavigatorShape';
 const WORD_DURATION_MS = 5000;
 
 export default class VocabView extends Component {
-  props : {
+  props: {
     categoryName: string,
     navigator: NavigatorShape
+  };
+
+  state: {
+    wordIndex: number;
   };
 
   state = {

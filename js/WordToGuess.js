@@ -30,12 +30,14 @@ export default class WordToGuess extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 150,
+    backgroundColor: 'transparent',
   },
   word: {
     fontSize: 48,
-    marginTop: 60,
-    marginBottom: 36,
-    color: '#FFF'
+    marginTop: 120,
+    marginBottom: 0,
+    color: '#FFF',
+    textAlign: 'center'
   },
 });
