@@ -37,11 +37,16 @@ export default class MatchingGame extends Component {
 
   onTick: () => void;
   onZero: () => void;
+  onGuessWord: () => void;
 
   componentWillMount(): void {
     const vocabList: Array<WordType> = vocab[this.props.categoryName];
 
-    const wordList = _.shuffle(vocabList);
+    const wordList = _.shuffle(vocabList).map(word => ({
+      word,
+      guessed: false
+    }));
+
     const guessList = _.shuffle(vocabList);
 
     this.state = {
@@ -58,8 +63,25 @@ export default class MatchingGame extends Component {
     this.onZero = () => {
       this.transitionToResultsPage({passed: false});
     };
-  }
 
+    this.onGuessWord = () => {
+      const {wordList, guessList} = this.state;
+      const currentWord = guessList[0];
+
+      const guessedWord = wordList.find(wordData => wordData.word === currentWord);
+      guessedWord.guessed = true;
+
+      const updatedGuessList = guessList.slice(1);
+      if (updatedGuessList.length === 0) {
+        this.transitionToResultsPage({passed: true});
+      } else {
+        this.setState({
+          wordList,
+          guessList: updatedGuessList,
+        });
+      }
+    };
+  }
 
   transitionToResultsPage({passed} = {}): void {
     // passed: boolean
@@ -74,24 +96,6 @@ export default class MatchingGame extends Component {
       }
     });
   }
-
-  onGuessWord: () => void = () => {
-    const {wordList, guessList} = this.state;
-    const currentWord = guessList[0];
-
-    const indexToRemove = wordList.findIndex(word => word === currentWord);
-    wordList.splice(indexToRemove, 1);
-
-    const updatedGuessList = guessList.slice(1);
-    if (wordList.length === 0) {
-      this.transitionToResultsPage({passed: true});
-    } else {
-      this.setState({
-        wordList,
-        guessList: updatedGuessList,
-      });
-    }
-  };
 
   render() {
     const {wordList, guessList} = this.state;

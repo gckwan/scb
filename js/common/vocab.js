@@ -8,13 +8,15 @@ export default {
     {english: 'Vegetable', chinese: '菜', pinyin: 'cài'},
     {english: 'Meat', chinese: '肉', pinyin: 'ròu'},
     {english: 'Egg', chinese: '蛋', pinyin: 'dàn'},
+    {english: 'Soup', chinese: '汤', pinyin: 'tāng'},
   ],
   Directions: [
-    {english: 'North', chinese: '北'}
+    {english: 'North', chinese: '北', pinyin: 'běi'},
+    {english: 'South', chinese: '南', pinyin: 'nán'},
+    {english: 'East', chinese: '东', pinyin: 'dōng'},
+    {english: 'West', chinese: '西', pinyin: 'xī'},
   ],
-  'Dim sum': [
-    {english: 'BBQ pork bun', chinese: '叉烧包'}
-  ],
+
   'Cities': [
     {english: 'Beijing', chinese: '北京'}
   ]

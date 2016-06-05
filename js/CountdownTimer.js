@@ -24,10 +24,10 @@ export default class CountdownTimer extends Component {
     onZero: () => void,
   };
 
-  static defaultProps: {
+  static defaultProps = {
     style: {},
-    onTick: () => void,
-    onZero: () => void
+    onTick: () => {},
+    onZero: () => {}
   };
 
   state: {
@@ -47,7 +47,7 @@ export default class CountdownTimer extends Component {
 
   countDown() {
     const {timeRemaining} = this.state;
-    const {interval, isRepating, initialTimeRemaining} = this.props;
+    const {interval, isRepeating, initialTimeRemaining} = this.props;
     let newTimeRemaining = this.state.timeRemaining - interval;
 
     // If isRepeating is true, reset the time remaining to initialTimeRemaining when it hits 0

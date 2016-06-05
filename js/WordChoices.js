@@ -21,6 +21,7 @@ class WordChoice extends Component {
     word: string;
     onPress: () => void;
     isCorrect: boolean;
+    guessed: boolean;
   };
 
   state: {
@@ -35,11 +36,17 @@ class WordChoice extends Component {
   }
 
   onPress = (): void => {
+    // Disable functionality if word has already been guessed
+    if (this.props.guessed) {
+      return;
+    }
+
     this.setState({isPressed: true});
 
     if (this.props.isCorrect) {
       this.setTimeout(() => {
         this.props.onPress();
+        this.setState({isPressed: false});
       }, 300);
     } else {
       this.setTimeout(() => {
@@ -51,18 +58,22 @@ class WordChoice extends Component {
   render() {
     let additionalStyles = {};
     let additionalTextStyles = {};
+    let guessStyles = styles.notGuessed;
+    let guessedTextStyles = {};
+
     if (this.state.isPressed) {
       additionalStyles = this.props.isCorrect ? styles.correct : styles.incorrect;
       additionalTextStyles = styles.pressed;
+    } else if (this.props.guessed) {
+      guessStyles = styles.guessed;
     }
-
 
     return (
       <TouchableOpacity
         accessibilityTraits="button"
         onPress={this.onPress}
         activeOpacity={0.8}
-        style={[styles.wordChoice, additionalStyles]}
+        style={[styles.wordChoice, guessStyles, additionalStyles]}
       >
         <Text style={[styles.wordChoiceText, additionalTextStyles]}>{this.props.word}</Text>
       </TouchableOpacity>
@@ -74,7 +85,7 @@ export default class WordChoices extends Component {
   props: {
     currentWord: WordType,
     mode: ModeType,
-    wordList: Array<WordType>,
+    wordList: Array<{word: WordType, guessed: boolean}>,
     onGuessWord: () => void
   };
 
@@ -89,11 +100,15 @@ export default class WordChoices extends Component {
         <ListView
           dataSource={dataSource}
           contentContainerStyle={styles.list}
-          renderRow={word => {
+          renderRow={wordData => {
+            const word: {chinese: string, english: string} = wordData.word;
+
+
             return (
               <WordChoice
                 onPress={this.props.onGuessWord}
                 key={word.chinese}
+                guessed={wordData.guessed}
                 style={styles.buttonStyles}
                 word={mode === 'englishToChinese' ? word.chinese : word.english}
                 isCorrect={word === currentWord}
@@ -119,7 +134,6 @@ const styles = StyleSheet.create({
   },
   wordChoice: {
     margin: 12,
-    backgroundColor: 'white',
     borderRadius: 36,
     padding: 24,
     flexDirection: 'row',
@@ -138,7 +152,13 @@ const styles = StyleSheet.create({
   },
   pressed: {
     color: 'white'
-  }
+  },
+  guessed: {
+    opacity: 0,
+  },
+  notGuessed: {
+    backgroundColor: 'white',
+  },
 });
 
 reactMixin(WordChoice.prototype, TimerMixin);
