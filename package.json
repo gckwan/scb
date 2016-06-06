@@ -10,6 +10,7 @@
     "react": "^0.14.8",
     "react-mixin": "^2.0.2",
     "react-native": "^0.24.1",
+    "react-native-speech": "^0.1.2",
     "react-timer-mixin": "^0.13.3"
   }
 }

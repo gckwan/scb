@@ -14,6 +14,8 @@ import React, {
 import Translation from './Translation';
 import CountdownTimer from './CountdownTimer';
 
+import Speech from 'react-native-speech';
+
 export default class WordView extends Component {
   static propTypes = {
     word: React.PropTypes.shape({
@@ -21,6 +23,23 @@ export default class WordView extends Component {
       chinese: React.PropTypes.string.isRequired,
     })
   };
+
+  componentDidMount() {
+    this.speakWord();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.word !== this.props.word) {
+      this.speakWord();
+    }
+  }
+
+  speakWord() {
+    Speech.speak({
+      text: this.props.word.chinese,
+      voice: 'zh-CN'
+    });
+  }
 
   render() {
     const {word} = this.props;
