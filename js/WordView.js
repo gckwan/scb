@@ -17,19 +17,20 @@ import CountdownTimer from './CountdownTimer';
 import Speech from 'react-native-speech';
 
 export default class WordView extends Component {
-  static propTypes = {
-    word: React.PropTypes.shape({
-      english: React.PropTypes.string.isRequired,
-      chinese: React.PropTypes.string.isRequired,
-    })
+  props: {
+    word: {
+      english: string,
+      chinese: string,
+    },
+    isActive: boolean
   };
 
   componentDidMount() {
     this.speakWord();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.word !== this.props.word) {
+  componentDidUpdate(prevProps: Object) {
+    if (this.props.isActive) {
       this.speakWord();
     }
   }
@@ -38,7 +39,8 @@ export default class WordView extends Component {
     Speech.speak({
       text: this.props.word.chinese,
       voice: 'zh-CN'
-    });
+    })
+    .catch(() => {});
   }
 
   render() {
@@ -46,7 +48,7 @@ export default class WordView extends Component {
 
     return (
       <View style={styles.container}>
-        <CountdownTimer initialTimeRemaining={5000} interval={1000} isRepeating={true} />
+        {this.props.isActive && <CountdownTimer initialTimeRemaining={3000} interval={1000} isRepeating={false} />}
         <Translation word={word} />
       </View>
     );

@@ -29,6 +29,7 @@ export default class ResultsPage extends Component {
       const {navigator} = props;
 
       navigator.push({
+        title: 'scb (生词本)',
         component: CategoryPage,
       });
     };

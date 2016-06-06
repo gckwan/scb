@@ -13,10 +13,15 @@ import React, {
 
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
+import Swiper from 'react-native-swiper';
+
 import vocab from './common/vocab';
+import Button from './common/Button';
+
 import WordView from './WordView';
 import MatchingInstructions from './MatchingInstructions';
 import NavigatorShape from './NavigatorShape';
+
 
 const WORD_DURATION_MS = 5000;
 
@@ -27,62 +32,75 @@ export default class VocabView extends Component {
   };
 
   state: {
-    wordIndex: number;
+    wordIndex: number
   };
 
-  state = {
-    wordIndex: 0
-  };
+  onScroll: () => void;
 
-  componentDidMount(): void {
-    this.wordChangeIntervalId = this.setInterval(this.changeWord, WORD_DURATION_MS);
-  }
+  constructor(props: Object) {
+    super(props);
 
-  changeWord() {
-    const vocabList = vocab[this.props.categoryName];
+    this.state = {
+      wordIndex: 0
+    };
 
-    let {wordIndex} = this.state;
-    const outOfWords = ++wordIndex >= vocabList.length;
-
-    if (outOfWords) {
-      this.clearInterval(this.wordChangeIntervalId);
-      this.transitionToGame();
-    } else {
-      this.setState({wordIndex});
-    }
-  }
-
-  transitionToGame(): void {
-    const {categoryName, navigator} = this.props;
-
-    navigator.push({
-      title: categoryName,
-      component: MatchingInstructions,
-      passProps: {categoryName}
-    });
+    this.onScroll = (e, state = {}) => {
+      this.setState({wordIndex: state.index});
+    };
   }
 
   render() {
+    const {wordIndex} = this.state;
+
     const vocabList = vocab[this.props.categoryName];
     const word = vocabList[this.state.wordIndex];
+
+    const viewsToRender = vocabList.map((word, index) =>
+      <WordView key={word.english} word={word} isActive={wordIndex === index} />
+    );
+
+    viewsToRender.push(
+      <MatchingInstructions
+        key="instructions"
+        navigator={this.props.navigator}
+        categoryName={this.props.categoryName}
+      />
+    );
+
     return (
-      <View style={styles.container}>
-        <WordView word={word} />
-      </View>
+      <Swiper
+        style={styles.container}
+        autoplay={true}
+        autoplayTimeout={3}
+        showsHorizontalScrollIndicator={true}
+        loop={false}
+        onMomentumScrollEnd={this.onScroll}
+      >
+        {viewsToRender}
+      </Swiper>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
     backgroundColor: '#3A69A6',
   },
   character: {
     fontSize: 180,
     marginBottom: 18,
     color: '#FFF'
+  },
+  endScreen: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  getReadyText: {
+    fontSize: 30,
+    color: '#FFF',
+    marginBottom: 48
   }
 });
 

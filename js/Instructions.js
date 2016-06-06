@@ -51,7 +51,7 @@ export default class Instructions extends Component {
           In this level, you'll learn {vocabList.length} words or phrases.
         </Text>
         <Text style={styles.captionText}>
-          You'll have 5 seconds to view each word or phrase. Then, you'll play a matching game to test
+          You'll have 3 seconds to view each word or phrase. Then, you'll play a matching game to test
           how well you learned the vocabulary!
         </Text>
 
