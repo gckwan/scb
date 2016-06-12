@@ -11,35 +11,45 @@ import React, {
 
 import vocab from './common/vocab';
 import Button from './common/Button';
-import NavigatorShape from './NavigatorShape';
-import VocabView from './VocabView';
+import type {NavigatorType} from './common/NavigatorType';
+import WordsToLearn from './WordsToLearn';
 import MatchingInstructions from './MatchingInstructions';
 
-export default class Instructions extends Component {
-  static propTypes = {
-    categoryName: React.PropTypes.string.isRequired,
-    navigator: NavigatorShape.isRequired
+/**
+ * The instructions that appear before the learning phase.
+ */
+export default class LearningInstructions extends Component {
+  props: {
+    categoryName: string;
+    navigator: NavigatorType;
   };
 
-  transitionToVocabView = (): void => {
-    const {categoryName, navigator} = this.props;
+  transitionToWordsToLearn: () => void;
+  transitionToGame: () => void;
 
-    navigator.push({
-      title: categoryName,
-      component: VocabView,
-      passProps: {categoryName}
-    });
+  constructor(props: Object) {
+    super(props);
+
+    this.transitionToComponent = (component) => {
+      const {categoryName, navigator} = this.props;
+
+      navigator.push({
+        component,
+        title: categoryName,
+        passProps: {categoryName}
+      });
+    }
+
+    this.transitionToWordsToLearn = (): void => {
+      this.transitionToComponent(WordsToLearn);
+    };
+
+    this.transitionToGame = (): void => {
+      this.transitionToComponent(MatchingInstructions);
+    }
+
   }
 
-  transitionToGame = (): void => {
-    const {categoryName, navigator} = this.props;
-
-    navigator.push({
-      title: categoryName,
-      component: MatchingInstructions,
-      passProps: {categoryName}
-    });
-  }
 
   render() {
     const vocabList = vocab[this.props.categoryName];
@@ -56,7 +66,7 @@ export default class Instructions extends Component {
         </Text>
 
         <View>
-          <Button onPress={this.transitionToVocabView}>
+          <Button onPress={this.transitionToWordsToLearn}>
             Get Started
           </Button>
 

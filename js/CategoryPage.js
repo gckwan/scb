@@ -13,11 +13,14 @@ import React, {
 
 import vocab from './common/vocab';
 import Category from './Category';
-import NavigatorShape from './NavigatorShape';
+import type {NavigatorType} from './common/NavigatorType';
 
+/**
+ * The list of categories selectable from the root of the app.
+ */
 export default class CategoryPage extends Component {
-  static propTypes = {
-    navigator: NavigatorShape.isRequired
+  props: {
+    navigator: NavigatorType
   };
 
   render() {

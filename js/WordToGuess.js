@@ -9,8 +9,11 @@ import React, {
   Text,
 } from 'react-native';
 
-import {WordType, ModeType} from './common/customTypes';
+import {WordType, ModeType, modeTypes} from './common/customTypes';
 
+/**
+ * During the matching game, the current word to guess.
+ */
 export default class WordToGuess extends Component {
   props: {
     word: WordType,
@@ -18,11 +21,11 @@ export default class WordToGuess extends Component {
   };
 
   render() {
-    const {word} = this.props;
+    const {word, mode} = this.props;
 
     return (
       <View style={styles.container}>
-        <Text style={styles.word}>{this.props.mode === 'chineseToEnglish' ? word.chinese : word.english}</Text>
+        <Text style={styles.word}>{mode === modeTypes.CHINESE_TO_ENGLISH ? word.chinese : word.english}</Text>
       </View>
     );
   }

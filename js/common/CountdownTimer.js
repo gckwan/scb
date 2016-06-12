@@ -11,7 +11,7 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import reactMixin from 'react-mixin';
+import ReactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 
 export default class CountdownTimer extends Component {
@@ -34,14 +34,16 @@ export default class CountdownTimer extends Component {
     timeRemaining: number
   };
 
+  intervalId: number;
+  setInterval: () => number;
+  clearInterval: () => void;
+
   constructor(props: Object) {
     super(props);
     this.state = {
       timeRemaining: props.initialTimeRemaining
     };
-  }
 
-  componentDidMount() {
     this.intervalId = this.setInterval(this.countDown, this.props.interval);
   }
 
@@ -50,7 +52,6 @@ export default class CountdownTimer extends Component {
     const {interval, isRepeating, initialTimeRemaining} = this.props;
     let newTimeRemaining = this.state.timeRemaining - interval;
 
-    // If isRepeating is true, reset the time remaining to initialTimeRemaining when it hits 0
     if (newTimeRemaining === 0) {
       if (isRepeating) {
         newTimeRemaining = initialTimeRemaining;
@@ -96,4 +97,4 @@ const styles = StyleSheet.create({
   }
 })
 
-reactMixin(CountdownTimer.prototype, TimerMixin);
+ReactMixin(CountdownTimer.prototype, TimerMixin);

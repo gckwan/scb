@@ -11,12 +11,16 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
+/**
+ * Displays the current word in Chinese, English, and Pinyin.
+ */
 export default class Translation extends Component {
-  static propTypes = {
-    word: React.PropTypes.shape({
-      english: React.PropTypes.string.isRequired,
-      chinese: React.PropTypes.string.isRequired,
-    })
+  props: {
+    word: {
+      english: string;
+      chinese: string;
+      pinyin: string;
+    }
   };
 
   render() {

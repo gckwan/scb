@@ -15,44 +15,57 @@ import WordToGuess from './WordToGuess';
 import WordChoices from './WordChoices';
 import ResultsPage from './ResultsPage';
 
-import CountdownTimer from './CountdownTimer';
-import NavigatorShape from './NavigatorShape';
+import CountdownTimer from './common/CountdownTimer';
+import {WordType, ModeType} from './common/customTypes';
+import type {NavigatorType} from './common/NavigatorType';
 
 import vocab from './common/vocab';
 
-import {WordType, ModeType} from './common/customTypes';
+const INITIAL_TIME_MS = 30000;
 
+/**
+ * The container component for step 2, the matching game.
+ * Handles state for the game and passes it down through the component tree.
+ */
 export default class MatchingGame extends Component {
   props: {
-    categoryName: string,
-    mode: ModeType,
-    navigator: NavigatorShape
+    categoryName: string;
+    mode: ModeType;
+    navigator: NavigatorType;
   };
 
   state: {
-    wordList: Array<WordType>,
-    guessList: Array<WordType>,
-    timeElapsed: number
+    choiceList: Array<WordType>;
+    wordsToGuessList: Array<WordType>;
+    currentWordIndex: number;
+    timeElapsed: number;
   };
 
   onTick: () => void;
   onZero: () => void;
   onGuessWord: () => void;
+  transitionToResultsPage: () => void;
 
-  componentWillMount(): void {
+  constructor(props: Object) {
+    super(props);
+
     const vocabList: Array<WordType> = vocab[this.props.categoryName];
 
-    const wordList = _.shuffle(vocabList).map(word => ({
+    // Shuffle the list of words to guess, so you get a different order each playthrough.
+    const wordsToGuessList = _.shuffle(vocabList);
+
+    // Shuffle the list of word choices and store a boolean alongside each word that represents
+    // whether it has been correctly guessed, so we can display that state in the UI.
+    const choiceList = _.shuffle(vocabList).map(word => ({
       word,
-      guessed: false
+      correctlyGuessed: false
     }));
 
-    const guessList = _.shuffle(vocabList);
-
     this.state = {
-      wordList,
-      guessList,
-      timeElapsed: 0
+      choiceList,
+      wordsToGuessList,
+      currentWordIndex: 0,
+      timeElapsed: 0,
     };
 
     this.onTick = ({timeElapsed} = {}) => {
@@ -61,50 +74,61 @@ export default class MatchingGame extends Component {
     };
 
     this.onZero = () => {
-      this.transitionToResultsPage({passed: false});
+      this.transitionToResultsPage(false);
     };
 
+    /**
+     * Mark the correctly guessed word and update the list of choices.
+     * If the user has guessed all the words, display the results page.
+     */
     this.onGuessWord = () => {
-      const {wordList, guessList} = this.state;
-      const currentWord = guessList[0];
+      const {choiceList, wordsToGuessList, currentWordIndex} = this.state;
 
-      const guessedWord = wordList.find(wordData => wordData.word === currentWord);
-      guessedWord.guessed = true;
+      const isLastWord = currentWordIndex === (wordsToGuessList.length - 1);
 
-      const updatedGuessList = guessList.slice(1);
-      if (updatedGuessList.length === 0) {
-        this.transitionToResultsPage({passed: true});
+      if (isLastWord) {
+        this.transitionToResultsPage(true);
       } else {
+        const currentWord = wordsToGuessList[currentWordIndex];
+
+<<<<<<< HEAD
+        // Mark the word that was just correctly guessed in the list of choices.
+        const guessedWord = choiceList.find(wordData => wordData.word === currentWord);
+        guessedWord.correctlyGuessed = true;
+=======
+        const guessedWord = choiceList.find(wordData => wordData.word === currentWord);
+        guessedWord.guessed = true;
+>>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
+
         this.setState({
-          wordList,
-          guessList: updatedGuessList,
+          choiceList,
+          currentWordIndex: currentWordIndex + 1
         });
       }
     };
-  }
 
-  transitionToResultsPage({passed} = {}): void {
-    // passed: boolean
-    const {categoryName, navigator} = this.props;
+    this.transitionToResultsPage = (passed: boolean) => {
+      const {categoryName, navigator} = this.props;
 
-    navigator.push({
-      component: ResultsPage,
-      passProps: {
-        passed,
-        timeElapsed: this.state.timeElapsed,
-        numWords: vocab[categoryName].length
-      }
-    });
+      navigator.push({
+        component: ResultsPage,
+        passProps: {
+          passed,
+          timeElapsed: this.state.timeElapsed,
+          numWords: vocab[categoryName].length
+        }
+      });
+    }
   }
 
   render() {
-    const {wordList, guessList} = this.state;
-    const currentWord = guessList[0];
+    const {choiceList, wordsToGuessList, currentWordIndex} = this.state;
+    const currentWord = wordsToGuessList[currentWordIndex];
 
     return (
       <View style={styles.container}>
         <CountdownTimer
-          initialTimeRemaining={60000}
+          initialTimeRemaining={INITIAL_TIME_MS}
           interval={1000}
           isRepeating={false}
           onTick={this.onTick}
@@ -113,7 +137,7 @@ export default class MatchingGame extends Component {
         <WordToGuess word={currentWord} mode={this.props.mode} />
         <WordChoices
           currentWord={currentWord}
-          wordList={wordList}
+          wordList={choiceList}
           mode={this.props.mode}
           onGuessWord={this.onGuessWord}
         />

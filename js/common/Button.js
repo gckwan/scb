@@ -12,7 +12,7 @@
    TouchableOpacity
  } from 'react-native';
 
-export default class F8Button extends React.Component {
+export default class Button extends React.Component {
   props: {
     type: 'primary' | 'secondary';
     style?: any;

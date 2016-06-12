@@ -11,25 +11,35 @@ import React, {
   TouchableOpacity
 } from 'react-native';
 
-import VocabView from './VocabView';
-import Instructions from './Instructions';
-import NavigatorShape from './NavigatorShape';
+import WordsToLearn from './WordsToLearn';
+import LearningInstructions from './LearningInstructions';
+import type {NavigatorType} from './common/NavigatorType';
 
+/**
+ * A button representing a category of vocabulary, such as "Food" or "Directions,"
+ * that leads to a learning game when pressed.
+ */
 export default class Category extends Component {
-  static propTypes = {
-    categoryName: React.PropTypes.string.isRequired,
-    navigator: NavigatorShape.isRequired
+  props: {
+    categoryName: string;
+    navigator: NavigatorType;
   };
 
-  onPress = (): void => {
-    const {categoryName, navigator} = this.props;
+  onPress: () => void;
 
-    navigator.push({
-      title: categoryName,
-      component: Instructions,
-      passProps: {categoryName}
-    });
-  };
+  constructor(props: Object) {
+    super(props);
+
+    this.onPress = (): void => {
+      const {categoryName, navigator} = this.props;
+
+      navigator.push({
+        title: categoryName,
+        component: LearningInstructions,
+        passProps: {categoryName}
+      });
+    };
+  }
 
   render() {
     return (

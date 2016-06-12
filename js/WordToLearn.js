@@ -12,17 +12,21 @@ import React, {
 } from 'react-native';
 
 import Translation from './Translation';
-import CountdownTimer from './CountdownTimer';
+import CountdownTimer from './common/CountdownTimer';
 
 import Speech from 'react-native-speech';
 
-export default class WordView extends Component {
+/**
+ * During the learning phase, displays a word and its associated countdown.
+ */
+export default class WordToLearn extends Component {
   props: {
     word: {
-      english: string,
-      chinese: string,
-    },
-    isActive: boolean
+      english: string;
+      chinese: string;
+      pinyin: string;
+    };
+    isActive: boolean;
   };
 
   componentDidMount() {

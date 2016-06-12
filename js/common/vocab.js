@@ -1,3 +1,5 @@
+// TODO(grace): Fetch data from APIs
+
 export default {
   Food: [
     {english: 'Rice', chinese: '饭', pinyin: 'fàn'},
@@ -18,6 +20,11 @@ export default {
   ],
 
   'Cities': [
-    {english: 'Beijing', chinese: '北京'}
+    {english: 'Beijing', chinese: '北京', pinyin: 'Běijīng'},
+    {english: 'Shanghai', chinese: '上海', pinyin: 'Shànghǎi'},
+    {english: 'Nanjing', chinese: '南京', pinyin: 'Nánjīng'},
+    {english: 'Guangzhou', chinese: '广州', pinyin: 'Guǎngzhōu'},
+    {english: 'Xi\'an', chinese: '西安', pinyin: 'Xī\'ān'},
+    {english: 'Chengdu', chinese: '成都', pinyin: 'Chéngdū'},
   ]
 };

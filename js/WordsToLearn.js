@@ -12,23 +12,24 @@ import React, {
 } from 'react-native';
 
 import reactMixin from 'react-mixin';
-import TimerMixin from 'react-timer-mixin';
 import Swiper from 'react-native-swiper';
 
 import vocab from './common/vocab';
 import Button from './common/Button';
 
-import WordView from './WordView';
+import WordToLearn from './WordToLearn';
 import MatchingInstructions from './MatchingInstructions';
-import NavigatorShape from './NavigatorShape';
-
+import type {NavigatorType} from './common/NavigatorType';
 
 const WORD_DURATION_MS = 5000;
 
-export default class VocabView extends Component {
+/**
+ * During the learning phase, manages the display of the words the user is learning.
+ */
+export default class WordsToLearn extends Component {
   props: {
     categoryName: string,
-    navigator: NavigatorShape
+    navigator: NavigatorType
   };
 
   state: {
@@ -56,7 +57,7 @@ export default class VocabView extends Component {
     const word = vocabList[this.state.wordIndex];
 
     const viewsToRender = vocabList.map((word, index) =>
-      <WordView key={word.english} word={word} isActive={wordIndex === index} />
+      <WordToLearn key={word.english} word={word} isActive={wordIndex === index} />
     );
 
     viewsToRender.push(
@@ -75,6 +76,7 @@ export default class VocabView extends Component {
         showsHorizontalScrollIndicator={true}
         loop={false}
         onMomentumScrollEnd={this.onScroll}
+        showsButtons={true}
       >
         {viewsToRender}
       </Swiper>
@@ -103,5 +105,3 @@ const styles = StyleSheet.create({
     marginBottom: 48
   }
 });
-
-reactMixin(VocabView.prototype, TimerMixin);
