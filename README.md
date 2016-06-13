@@ -2,6 +2,9 @@
 
 scb is a simple vocab-learning game written in React Native + Flow.
 
+![alt text](http://i.imgur.com/WfvM1dS.png "Learning phase")
+![alt text](http://i.imgur.com/PlS3Hks.png "Gameplay")
+
 It's still in prototype stage, but possible extensions could include:
 - Sound effects when winning or losing
 - Implement "lives" (e.g. guess 3 or more wrong and you lose)
