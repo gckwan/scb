@@ -28,11 +28,7 @@ export default class WordChoice extends Component {
     word: WordType;
     onPress: () => void;
     isCorrect: boolean;
-<<<<<<< HEAD
     correctlyGuessed: boolean;
-=======
-    guessed: boolean;
->>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
   };
 
   state: {
@@ -52,13 +48,8 @@ export default class WordChoice extends Component {
     };
 
     this.onPress = (): void => {
-<<<<<<< HEAD
       // Disable functionality if word has already been correctlyGuessed
       if (this.props.correctlyGuessed) {
-=======
-      // Disable functionality if word has already been guessed
-      if (this.props.guessed) {
->>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
         return;
       }
 
@@ -88,22 +79,13 @@ export default class WordChoice extends Component {
     let additionalStyles = {};
     let additionalTextStyles = {};
     let guessStyles = styles.notGuessed;
-<<<<<<< HEAD
     let correctlyGuessedTextStyles = {};
-=======
-    let guessedTextStyles = {};
->>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
 
     if (this.state.isPressed) {
       additionalStyles = this.props.isCorrect ? styles.correct : styles.incorrect;
       additionalTextStyles = styles.pressed;
-<<<<<<< HEAD
     } else if (this.props.correctlyGuessed) {
       guessStyles = styles.correctlyGuessed;
-=======
-    } else if (this.props.guessed) {
-      guessStyles = styles.guessed;
->>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
     }
 
     return (
@@ -141,11 +123,7 @@ const styles = StyleSheet.create({
   pressed: {
     color: 'white'
   },
-<<<<<<< HEAD
   correctlyGuessed: {
-=======
-  guessed: {
->>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
     opacity: 0,
   },
   notGuessed: {

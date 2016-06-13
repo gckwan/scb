@@ -45,11 +45,7 @@ export default class WordChoices extends Component {
               <WordChoice
                 onPress={this.props.onGuessWord}
                 key={word.chinese}
-<<<<<<< HEAD
                 correctlyGuessed={wordData.correctlyGuessed}
-=======
-                guessed={wordData.guessed}
->>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
                 word={mode === modeTypes.ENGLISH_TO_CHINESE ? word.chinese : word.english}
                 isCorrect={word === currentWord}
               />

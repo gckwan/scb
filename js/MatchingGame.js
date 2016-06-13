@@ -91,14 +91,9 @@ export default class MatchingGame extends Component {
       } else {
         const currentWord = wordsToGuessList[currentWordIndex];
 
-<<<<<<< HEAD
         // Mark the word that was just correctly guessed in the list of choices.
         const guessedWord = choiceList.find(wordData => wordData.word === currentWord);
         guessedWord.correctlyGuessed = true;
-=======
-        const guessedWord = choiceList.find(wordData => wordData.word === currentWord);
-        guessedWord.guessed = true;
->>>>>>> 24bfa688569eb8550e367ec769ba749e67590216
 
         this.setState({
           choiceList,
